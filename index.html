@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Haochuan Huai</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --blue:     #0065bd;
+      --blue-lt:  #e8f1fb;
+      --sky:      #38bdf8;
+      --text:     #0f172a;
+      --muted:    #64748b;
+      --border:   #e2e8f0;
+      --bg:       #ffffff;
+      --bg2:      #f8fafc;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 99;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 960px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 58px; padding: 0 1.5rem;
+    }
+    .nav-logo { font-weight: 800; font-size: 1.1rem; color: var(--blue); text-decoration: none; letter-spacing: -.02em; }
+    .nav-links { list-style: none; display: flex; gap: 1.75rem; }
+    .nav-links a { text-decoration: none; font-size: .875rem; font-weight: 500; color: var(--muted); transition: color .15s; }
+    .nav-links a:hover { color: var(--blue); }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 9rem 1.5rem 5rem;
+      background: linear-gradient(160deg, #f0f8ff 0%, #ffffff 60%, #eff6ff 100%);
+    }
+    .hero-inner { max-width: 960px; margin: 0 auto; }
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 3.75rem);
+      font-weight: 800; letter-spacing: -.03em; line-height: 1.05;
+      margin-bottom: .75rem;
+    }
+    .hero h1 span { color: var(--blue); }
+    .hero-sub {
+      font-size: 1.15rem; color: var(--muted);
+      margin-bottom: 2rem; font-weight: 400;
+    }
+    .hero-sub b { color: var(--text); font-weight: 600; }
+    .chips { display: flex; gap: .6rem; flex-wrap: wrap; }
+    .chip {
+      display: flex; align-items: center; gap: .35rem;
+      padding: .4rem .9rem;
+      border: 1px solid var(--border); border-radius: 99px;
+      background: white; color: var(--muted);
+      font-size: .825rem; font-weight: 500;
+      text-decoration: none; transition: all .15s;
+    }
+    .chip:hover { border-color: var(--blue); color: var(--blue); }
+
+    /* ── Sections ── */
+    section { padding: 4.5rem 1.5rem; }
+    section:nth-child(even) { background: var(--bg2); }
+    .wrap { max-width: 960px; margin: 0 auto; }
+
+    .sec-title {
+      font-size: 1.5rem; font-weight: 700; margin-bottom: 2rem;
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .sec-title::after { content:''; flex:1; height:1px; background: var(--border); }
+
+    /* ── Timeline cards ── */
+    .timeline { display: flex; flex-direction: column; gap: 1.25rem; }
+    .tcard {
+      border: 1px solid var(--border); border-radius: 14px;
+      padding: 1.4rem 1.5rem; background: white;
+      transition: box-shadow .2s;
+    }
+    .tcard:hover { box-shadow: 0 6px 24px rgba(0,0,0,.07); }
+    .tcard-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; }
+    .tcard-left .org { font-weight: 700; font-size: 1rem; }
+    .tcard-left .role { font-weight: 600; color: var(--blue); font-size: .95rem; margin: .15rem 0; }
+    .tcard-left .loc { font-size: .825rem; color: var(--muted); }
+    .tcard-date { font-size: .8rem; color: var(--muted); font-weight: 500; white-space: nowrap; padding-top: .1rem; }
+    .tcard ul { margin-top: .9rem; padding-left: 1.2rem; }
+    .tcard ul li { font-size: .875rem; color: var(--muted); margin-bottom: .4rem; line-height: 1.65; }
+
+    /* ── Project cards ── */
+    .proj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 1.25rem; }
+    .pcard {
+      border: 1px solid var(--border); border-radius: 14px;
+      padding: 1.4rem 1.5rem; background: white;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .pcard:hover { box-shadow: 0 6px 24px rgba(0,0,0,.09); transform: translateY(-3px); }
+    .pcard h3 { font-size: .975rem; font-weight: 700; margin-bottom: .4rem; }
+    .pcard .stack { font-size: .75rem; color: var(--blue); font-weight: 600; margin-bottom: .75rem; }
+    .pcard ul { padding-left: 1.1rem; }
+    .pcard ul li { font-size: .84rem; color: var(--muted); margin-bottom: .35rem; line-height: 1.6; }
+
+    /* ── Publication ── */
+    .pub {
+      border: 1px solid var(--border); border-radius: 14px;
+      padding: 1.5rem; background: white;
+    }
+    .pub .badge {
+      display: inline-block; padding: .2rem .6rem;
+      background: var(--blue-lt); color: var(--blue);
+      border-radius: 5px; font-size: .75rem; font-weight: 700;
+      margin-bottom: .75rem;
+    }
+    .pub h3 { font-size: .975rem; font-weight: 600; margin-bottom: .45rem; line-height: 1.5; }
+    .pub .authors { font-size: .85rem; color: var(--muted); }
+
+    /* ── Skills ── */
+    .skill-groups { display: flex; flex-direction: column; gap: 1.5rem; }
+    .skill-group h3 {
+      font-size: .75rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .07em; color: var(--muted); margin-bottom: .6rem;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: .45rem; }
+    .tag {
+      padding: .3rem .75rem;
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 99px; font-size: .83rem; font-weight: 500; color: var(--text);
+    }
+
+    /* ── Beyond the code ── */
+    .interest-grid { display: flex; flex-wrap: wrap; gap: 1rem; }
+    .icard {
+      display: flex; align-items: center; gap: .75rem;
+      padding: 1rem 1.4rem;
+      border: 1px solid var(--border); border-radius: 14px;
+      background: white; font-weight: 600; font-size: .95rem;
+      transition: box-shadow .2s;
+    }
+    .icard:hover { box-shadow: 0 4px 16px rgba(0,0,0,.08); }
+    .icard .icon { font-size: 1.6rem; }
+    .icard.ski { border-color: var(--sky); background: #f0fbff; }
+
+    /* ── Footer ── */
+    footer {
+      padding: 2rem 1.5rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      font-size: .84rem; color: var(--muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .tcard-head { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">HH</a>
+    <ul class="nav-links">
+      <li><a href="#education">Education</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#skills">Skills</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-inner">
+    <h1>Haochuan <span>Huai</span></h1>
+    <p class="hero-sub">
+      <b>M.Sc. Computer Science</b> at Technical University of Munich &nbsp;·&nbsp;
+      Generative AI &amp; RAG
+    </p>
+    <div class="chips">
+      <a class="chip" href="mailto:haochuan.huai@tum.de">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        haochuan.huai@tum.de
+      </a>
+      <a class="chip" href="tel:+4915206080866">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.08 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        +49 1520 6080866
+      </a>
+      <span class="chip">📍 Munich, Germany</span>
+    </div>
+  </div>
+</section>
+
+<!-- Education -->
+<section id="education">
+  <div class="wrap">
+    <h2 class="sec-title">Education</h2>
+    <div class="timeline">
+
+      <div class="tcard">
+        <div class="tcard-head">
+          <div class="tcard-left">
+            <div class="org">Technical University of Munich (TUM)</div>
+            <div class="role">M.Sc. Computer Science</div>
+            <div class="loc">Munich, Germany</div>
+          </div>
+          <div class="tcard-date">Oct 2024 – Present</div>
+        </div>
+        <ul>
+          <li>Focus Areas: Generative AI, Retrieval-Augmented Generation, Machine Learning</li>
+        </ul>
+      </div>
+
+      <div class="tcard">
+        <div class="tcard-head">
+          <div class="tcard-left">
+            <div class="org">Technical University of Munich (TUM)</div>
+            <div class="role">B.Sc. Computer Science</div>
+            <div class="loc">Munich, Germany</div>
+          </div>
+          <div class="tcard-date">Oct 2019 – Jul 2024</div>
+        </div>
+        <ul>
+          <li>Bachelor's Thesis <b>(Grade: 1.0)</b>: Developed a VR learning environment for data literacy training with an integrated LLM-based chatbot in Unity.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Experience -->
+<section id="experience">
+  <div class="wrap">
+    <h2 class="sec-title">Experience</h2>
+    <div class="timeline">
+
+      <div class="tcard">
+        <div class="tcard-head">
+          <div class="tcard-left">
+            <div class="org">KEWAZO GmbH</div>
+            <div class="role">Working Student, Software Engineering</div>
+            <div class="loc">Garching, Germany</div>
+          </div>
+          <div class="tcard-date">Jun 2025 – Oct 2025</div>
+        </div>
+        <ul>
+          <li>Developed and maintained FastAPI services backed by PostgreSQL for an internal debugger, including embedded Google authentication and structured response models for liftbot business objects.</li>
+          <li>Built a Svelte + TypeScript frontend with liftbot selection and detail views displaying device data (name, voltage, current) from PostgreSQL.</li>
+          <li>Supported Docker-based deployment on cloud infrastructure using Nginx and uv while modernizing a legacy internal debugger stack.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Projects -->
+<section id="projects">
+  <div class="wrap">
+    <h2 class="sec-title">Selected Projects</h2>
+    <div class="proj-grid">
+
+      <div class="pcard">
+        <h3>AI Travel Recommendation Platform</h3>
+        <div class="stack">Spring Boot · Python · RAG · Qdrant · Docker · Kubernetes</div>
+        <ul>
+          <li>Built a Spring Boot service for CRUD operations and Python microservices for RAG, retrieval, and generative-answer workflows backed by Qdrant vector storage.</li>
+          <li>Containerized with Docker and orchestrated deployment with Kubernetes.</li>
+        </ul>
+      </div>
+
+      <div class="pcard">
+        <h3>AI-Based News Notifier</h3>
+        <div class="stack">FastAPI · Crawl4AI · Clerk · Qdrant</div>
+        <ul>
+          <li>Built crawlers and backend APIs for major news sites in a 12-person Scrum team with an external industry partner.</li>
+          <li>Implemented data-cleaning and retrieval workflows in Qdrant supporting topic-based recommendation, search, and notification.</li>
+        </ul>
+      </div>
+
+      <div class="pcard">
+        <h3>Data Literacy Web App</h3>
+        <div class="stack">Flask · Docker · OpenAI</div>
+        <ul>
+          <li>Integrated ChatGPT into a VR learning environment as part of a research-oriented course project (Grade: 1.3).</li>
+          <li>Implemented an AI-powered interaction layer between the VR environment and the LLMs.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Publications -->
+<section id="publications">
+  <div class="wrap">
+    <h2 class="sec-title">Publications</h2>
+    <div class="pub">
+      <span class="badge">IEEE ISMAR 2024</span>
+      <h3>DataliVR: Transformation of Data Literacy Education through VR with ChatGPT-Powered Enhancements</h3>
+      <p class="authors">H. Gao, <b>H. Huai</b>, S. Yildiz-Degirmenci, M. Bannert, E. Kasneci</p>
+    </div>
+  </div>
+</section>
+
+<!-- Skills -->
+<section id="skills">
+  <div class="wrap">
+    <h2 class="sec-title">Skills</h2>
+    <div class="skill-groups">
+
+      <div class="skill-group">
+        <h3>Programming Languages</h3>
+        <div class="tags">
+          <span class="tag">Python</span>
+          <span class="tag">Java</span>
+          <span class="tag">C#</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">C++</span>
+          <span class="tag">SQL</span>
+          <span class="tag">Bash</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h3>Frameworks &amp; Tools</h3>
+        <div class="tags">
+          <span class="tag">PyTorch</span>
+          <span class="tag">FastAPI</span>
+          <span class="tag">Qdrant</span>
+          <span class="tag">Spring Boot</span>
+          <span class="tag">Docker</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">Svelte</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">Git</span>
+          <span class="tag">Kubernetes</span>
+          <span class="tag">Nginx</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h3>Human Languages</h3>
+        <div class="tags">
+          <span class="tag">Chinese — Native</span>
+          <span class="tag">German — Business Fluent</span>
+          <span class="tag">English — Business Fluent</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Beyond the Code -->
+<section id="beyond">
+  <div class="wrap">
+    <h2 class="sec-title">Beyond the Code</h2>
+    <div class="interest-grid">
+      <div class="icard ski">
+        <span class="icon">⛷️</span>
+        <span>Skiing</span>
+      </div>
+      <div class="icard">
+        <span class="icon">🤖</span>
+        <span>Generative AI</span>
+      </div>
+      <div class="icard">
+        <span class="icon">🥽</span>
+        <span>VR Development</span>
+      </div>
+      <div class="icard">
+        <span class="icon">🏔️</span>
+        <span>Mountains</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  © 2026 Haochuan Huai &nbsp;·&nbsp; Munich, Germany &nbsp;·&nbsp;
+  <a href="mailto:haochuan.huai@tum.de" style="color:var(--blue);text-decoration:none;">haochuan.huai@tum.de</a>
+</footer>
+
+<script>
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.tcard, .pcard, .pub, .icard').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(18px)';
+    el.style.transition = 'opacity .45s ease, transform .45s ease';
+    io.observe(el);
+  });
+</script>
+
+</body>
+</html>
